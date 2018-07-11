@@ -6,4 +6,6 @@ Spring 2014 final project at UIC
 I tested this with an Nvidia GTX 460m in 2014 on Windows.
 I have not tested it since, but might port from GLUT to GLFW.
 
+This is an old project. Use at your own risk.
+
 MIT License
