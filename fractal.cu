@@ -80,41 +80,41 @@ void drawSavedMap()
 
 void printInfo()
 {
-	cout << "Last redraw/compute:" << endl;
+    cout << "Last redraw/compute:" << endl;
     cout << "size of double: " << sizeof(double) << " size of long double: " << sizeof(long double) << endl;
 
-	if (GPU_mode == false)
-		cout << "********CPU MODE********";
-	else
-		cout << "********GPU MODE********";
+    if (GPU_mode == false)
+        cout << "********CPU MODE********";
+    else
+        cout << "********GPU MODE********";
 
-	cout << endl << "Max iterations: " << MaxIterations << " BLOCK_SIZE: " << BLOCK_SIZE;
+    cout << endl << "Max iterations: " << MaxIterations << " BLOCK_SIZE: " << BLOCK_SIZE;
 
-	cout << endl << "Min x (real axis): " << MinRe << endl << "Max x (real axis): " << MaxRe;
-  	cout << endl << "Min y (complex axis): " << MinIm << endl << "Max y (complex axis): " << MaxIm;
+    cout << endl << "Min x (real axis): " << MinRe << endl << "Max x (real axis): " << MaxRe;
+    cout << endl << "Min y (complex axis): " << MinIm << endl << "Max y (complex axis): " << MaxIm;
     cout << endl << "Time to calculate Mandelbrot & draw screen: " << (clock() - clock_timer_var ) / (double) CLOCKS_PER_SEC << "s";
     cout << endl;
 }
 
 void drawBox()
 {
-	glColor3f(1.0f,1.0f,1.0f);
-	glBegin(GL_LINES);
-	glVertex2f(bx,HGT-by);
-	glVertex2f(cx,HGT-by);
-	glEnd();
-	glBegin(GL_LINES);
-	glVertex2f(bx,HGT-by);
-	glVertex2f(bx,cy);
-	glEnd();
-	glBegin(GL_LINES);
-	glVertex2f(cx,HGT-by);
-	glVertex2f(cx,cy);
-	glEnd();
-	glBegin(GL_LINES);
-	glVertex2f(bx,cy);
-	glVertex2f(cx,cy);
-	glEnd();
+    glColor3f(1.0f,1.0f,1.0f);
+    glBegin(GL_LINES);
+    glVertex2f(bx,HGT-by);
+    glVertex2f(cx,HGT-by);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(bx,HGT-by);
+    glVertex2f(bx,cy);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(cx,HGT-by);
+    glVertex2f(cx,cy);
+    glEnd();
+    glBegin(GL_LINES);
+    glVertex2f(bx,cy);
+    glVertex2f(cx,cy);
+    glEnd();
 }
 
 __global__ void drawMandelbrotGPU(double MaxRe, double MinRe, double MaxIm, double MinIm, double *cell_arrayr)
@@ -138,15 +138,15 @@ __global__ void drawMandelbrotGPU(double MaxRe, double MinRe, double MaxIm, doub
   Z_im = c_im;
   loop_iters_n = 0;
 
-  for ( unsigned n = 0; n < MaxIterations; ++n ) 
-  {	
-  	Z_re2 = Z_re * Z_re;
-  	Z_im2 = Z_im * Z_im;
-  	if ( Z_re2 + Z_im2 > 4 )
-  	   break;
-        Z_im = 2 * Z_re * Z_im + c_im;
-  	Z_re = Z_re2 - Z_im2 + c_re;
-  	loop_iters_n = (double)n;
+  for (unsigned n = 0; n < MaxIterations; ++n ) 
+  {
+      Z_re2 = Z_re * Z_re;
+      Z_im2 = Z_im * Z_im;
+      if ( Z_re2 + Z_im2 > 4 )
+          break;
+      Z_im = 2 * Z_re * Z_im + c_im;
+      Z_re = Z_re2 - Z_im2 + c_re;
+      loop_iters_n = (double)n;
   }
 
   loop_iters_n /= MaxIterations;
